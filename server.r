@@ -25,26 +25,39 @@ shinyServer(function(input,output){
   if(is.null(CurSupplier)){
     output$Display <- renderUI({
         list(
-          h1("ABSciex"),
-          wellPanel(
-            h2("Login"),
-            textInput("Login_Username", label="Email:", value=""),
-            passwordInput("Login_Password", label="Password:", value=""),
-            actionButton("Login", label="Login"),
-            textOutput("Login_Message")
+          fluidRow(
+            column(12,
+              h1("ABSciex"),
+              wellPanel(
+                h2("Login"),
+                textInput("Login_Username", label="Email:", value=""),
+                passwordInput("Login_Password", label="Password:", value=""),
+                actionButton("Login", label="Login"),
+                textOutput("Login_Message")
+              )
+            )
           ),
-          wellPanel(
-            h2("Register"),
-            textInput("Register_Username", label="Email:", value=""),
-            textInput("Register_Supplier_Name", label="Supplier Name:", value=""),
-            passwordInput("Register_Password", label="Password:", value=""),
-            passwordInput("Register_Password_Confirm", label="Confirm Password:", value=""),
-            actionButton("Register", label="Register"),
-            textOutput("Register_Message")
-          ),
-          wellPanel(
-            h2("Reset Password")
-          )
+          fluidRow(
+            column(8,
+              wellPanel(
+                h2("Register"),
+                textInput("Register_Username", label="Email:", value=""),
+                textInput("Register_Supplier_Name", label="Supplier Name:", value=""),
+                passwordInput("Register_Password", label="Password:", value=""),
+                passwordInput("Register_Password_Confirm", label="Confirm Password:", value=""),
+                actionButton("Register", label="Register"),
+                textOutput("Register_Message")
+              )
+            ),
+            column(4, 
+              wellPanel(
+                h2("Reset Password"),
+                textInput("Reset_Email", label="Email:", value=""),
+                actionButton("Reset", label="Reset"),
+                textOutput("Reset_Message")
+              )
+            )
+        )
         )
     }
     )
@@ -55,8 +68,13 @@ shinyServer(function(input,output){
         CurSupplier <- LoginResult
         output$Display <- renderUI({
           list(
-            h1("AB Sciex"),
-            h3(paste("Welcome ", CurSupplier, sep=""))
+            fluidRow(12,
+              h1(paste("Welcome ", CurSupplier, sep=""))
+            ),
+            fluidRow(12,
+              wellPanel("Explanation")
+            ),
+            
           )
         })
       }
